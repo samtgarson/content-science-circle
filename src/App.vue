@@ -18,4 +18,6 @@ export default {
 
 main
   text-align: center
+  max-width: 1100px
+  margin: 0 auto
 </style>

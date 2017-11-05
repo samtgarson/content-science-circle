@@ -1,12 +1,30 @@
 <template lang="pug">
 .wrapper
   svg(viewBox="0 0 826 826")
-    path(d="M456,106 L455.78,105.56 L403.81,0 C261.56,3.06 137,78.07 65.13,190.11 L169.74,197 C181.525156,197.454376 192.260492,203.900858 198.2,214.09 L249.42,295.88 C285.384105,245.5116 342.582461,214.561754 404.42,212.01 L404.42,212.01 L455.83,115.09 C457.464786,112.296076 457.529176,108.853096 456,106 L456,106 Z", fill="#6CFFB9", fill-rule="nonzero")
-    path(d="M431.84,0.34 L478.13,94.34 C483.629018,104.777167 483.410224,117.301278 477.55,127.54 L432.33,212.8 C493.93645,218.778925 549.343286,252.834002 582.5,305.1 L692.11,301.17 C695.367139,301.201042 698.402614,299.523941 700.11,296.75 L700.37,296.34 L765.85,198.49 C696.48,84.49 573.45,6.74 431.84,0.34 Z", fill="#5EEFAA", fill-rule="nonzero")
-    path(d="M779.57,222.91 L721.25,310.07 C714.973205,320.043406 704.034062,326.116516 692.25,326.17 L595.84,329.63 C621.383878,386.004951 619.584337,450.994941 590.96,505.87 L649.15,598.81 C650.762086,601.629853 653.723413,603.409679 656.97,603.51 L657.45,603.51 L774.95,611.29 C840.997574,490.653545 842.740491,345.07312 779.6,222.89 L779.57,222.91 Z", fill="#41D890", fill-rule="nonzero")
-    path(d="M656,628.49 C644.215951,628.03191 633.482266,621.586419 627.54,611.4 L576.3,529.61 C540.335895,579.9784 483.137539,610.928246 421.3,613.48 L421.3,613.48 L369.89,710.39 C368.251059,713.194411 368.190438,716.649826 369.73,719.51 L369.95,719.94 L421.95,825.52 C564.2,822.46 688.75,747.45 760.63,635.41 L656,628.49 Z", fill="#2DC97E", fill-rule="nonzero")
-    path(d="M347.59,731.18 C342.090982,720.742833 342.309776,708.218722 348.17,697.98 L393.39,612.72 C331.78355,606.741075 276.376714,572.685998 243.22,520.42 L133.61,524.35 C130.355359,524.318811 127.32124,525.991369 125.61,528.76 L125.35,529.17 L59.89,627 C129.24,741 252.27,818.75 393.89,825.15 L347.59,731.18 Z", fill="#1ABA6D", fill-rule="nonzero")
-    path(d="M133.5,499.35 L229.91,495.89 C204.366122,439.515049 206.165663,374.525059 234.79,319.65 L176.6,226.71 C174.987914,223.890147 172.026587,222.110321 168.78,222.01 L168.3,222.01 L50.8,214.21 C-15.247574,334.846455 -16.990491,480.42688 46.15,602.61 L104.47,515.45 C110.752502,505.46762 121.705261,499.393234 133.5,499.35 Z", fill="#07AA5C", fill-rule="nonzero")
+    defs
+      linearGradient#linearGradient-1(x1="0%", y1="50.0067595%", x2="100.004308%", y2="50.0067595%")
+        stop(stop-color="#73FFBD", offset="0%")
+        stop(stop-color="#FFFFFF", offset="100%")
+      linearGradient#linearGradient-2(x1="0%", y1="50%", x2="100%", y2="50%")
+        stop(stop-color="#5EEFAA", offset="0%")
+        stop(stop-color="#FFFFFF", offset="100%")
+      linearGradient#linearGradient-3(x1="-0.0127773656%", y1="50.0051493%", x2="99.9871453%", y2="50.0051493%")
+        stop(stop-color="#41D890", offset="0%")
+        stop(stop-color="#FFFFFF", offset="100%")
+      linearGradient#linearGradient-4(x1="-0.00424114361%", y1="50.0016897%", x2="99.9897963%", y2="50.0016897%")
+        stop(stop-color="#2DC97E", offset="0%")
+        stop(stop-color="#FFFFFF", offset="100%")
+      linearGradient#linearGradient-5(x1="0%", y1="50.0098438%", x2="99.997006%", y2="50.0098438%")
+        stop(stop-color="#1ABA6D", offset="0%")
+        stop(stop-color="#FFFFFF", offset="100%")
+      linearGradient#linearGradient-6(x1="7.73651674e-05%", y1="50%", x2="100.012779%", y2="50%")
+        stop(stop-color="#07AA5C", offset="0%")
+        stop(stop-color="#FFFFFF", offset="100%")
+    div(
+      v-for="segment in segments",
+      :is="segment.name",
+      @mousedown.native="active = segment",
+      :active="segment.active")
     text
       tspan(x="143.88", y="626.22") CONTENT
       tspan(x="143.88", y="650.22") DISTRIBUTION
@@ -42,13 +60,31 @@
         tspan(x="1.18646397", y="30") Content Science Circle
       text(font-size="16.6463994")
         tspan(x="360.203113", y="17.0404") ®
-
-
+  box(v-if="active", v-bind="active")
 </template>
 
 <script>
+import One from './segments/one.vue'
+import Two from './segments/two.vue'
+import Three from './segments/three.vue'
+import Four from './segments/four.vue'
+import Five from './segments/five.vue'
+import Six from './segments/six.vue'
+import segments from "./text"
+import Box from "./box.vue"
+
 export default {
-  name: 'body'
+  components: { One, Two, Three, Four, Five, Six, Box },
+  name: 'body',
+  data: () => ({ active: false }),
+  computed: {
+    segments () {
+      return segments.map(segment => ({
+        ...segment,
+        active: this.active.name === segment.name
+      }))
+    }
+  }
 }
 </script>
 
@@ -67,8 +103,12 @@ $bg: (a: #6cffb9, b: #5eefaa, c: #41d890, d: #2dc97e, e: #1aba6d, f: #07aa5c)
   font-weight: 700
   position: relative
 
+.segment
+  cursor: pointer
+
 text
   fill: white
+  pointer-events: none
 
 .title text
   fill: black
