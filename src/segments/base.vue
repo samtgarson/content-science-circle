@@ -38,10 +38,4 @@ export default {
   &:not(.active) >>> .shape
     &:hover + .hover
       opacity: 1
-
-.fade-enter-active, .fade-leave-active
-  transition: opacity .2s
-
-.fade-enter, .fade-leave-active
-  opacity: 0
 </style>

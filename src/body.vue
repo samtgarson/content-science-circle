@@ -1,6 +1,8 @@
 <template lang="pug">
-.wrapper
-  svg(viewBox="0 0 826 826")
+.wrapper(:class="[side, { downwards }]")
+  transition(name="slide")
+    box(v-if="active", v-bind="active", @reset="active = null", :style="style")
+  svg(viewBox="0 0 826 826", :class="{ active: !!active }")
     defs
       linearGradient#linearGradient-1(x1="0%", y1="50.0067595%", x2="100.004308%", y2="50.0067595%")
         stop(stop-color="#73FFBD", offset="0%")
@@ -20,10 +22,11 @@
       linearGradient#linearGradient-6(x1="7.73651674e-05%", y1="50%", x2="100.012779%", y2="50%")
         stop(stop-color="#07AA5C", offset="0%")
         stop(stop-color="#FFFFFF", offset="100%")
+    circle(fill="#FFFFFF" cx="413" cy="413" r="413")
     div(
       v-for="segment in segments",
       :is="segment.name",
-      @mousedown.native="active = segment",
+      @mousedown.native="activate(segment, $event)",
       :active="segment.active")
     text
       tspan(x="143.88", y="626.22") CONTENT
@@ -60,7 +63,6 @@
         tspan(x="1.18646397", y="30") Content Science Circle
       text(font-size="16.6463994")
         tspan(x="360.203113", y="17.0404") ®
-  box(v-if="active", v-bind="active")
 </template>
 
 <script>
@@ -76,12 +78,32 @@ import Box from "./box.vue"
 export default {
   components: { One, Two, Three, Four, Five, Six, Box },
   name: 'body',
-  data: () => ({ active: false }),
+  data: () => ({ active: false, side: '', style: {}, downwards: false }),
+  watch: {
+    active (n) {
+      if (!n) return this.side = ''
+    }
+  },
+  methods: {
+    activate (segment, { target }) {
+      this.active = segment
+      this.side = segment.index > 0 && segment.index < 4 ? 'left' : 'right'
+      this.downwards = [3, 4].includes(segment.index)
+
+      const { top, height } = target.getBoundingClientRect()
+      if (this.downwards) {
+        this.style = { bottom: `-${top + height}px` }
+      } else {
+        this.style = { top: `${top}px` }
+      }
+    }
+  },
   computed: {
     segments () {
-      return segments.map(segment => ({
+      return segments.map((segment, index) => ({
         ...segment,
-        active: this.active.name === segment.name
+        index,
+        active: this.active && this.active.name === segment.name
       }))
     }
   }
@@ -96,12 +118,10 @@ $bg: (a: #6cffb9, b: #5eefaa, c: #41d890, d: #2dc97e, e: #1aba6d, f: #07aa5c)
     fill: #{$colour}
 
 .wrapper
-  width: 100%
-  max-width: 500px
-  margin: 0 auto
   font-family: Montserrat-Bold, Montserrat
   font-weight: 700
-  position: relative
+  display: flex
+  justify-content: space-around
 
 .segment
   cursor: pointer
@@ -115,4 +135,66 @@ text
 
 .numbers
   font-size: 40px
+
+svg
+  transition: filter .5s ease
+  width: 100%
+  max-width: 500px
+  position: relative
+  min-height: 650px
+  margin: 0 auto
+  z-index: 1
+
+  @media (min-width: 1000px)
+    position: absolute
+    transition: left .2s ease, transform .2s ease
+    left: 50%
+    transform: translateX(-50%)
+
+    .left &
+      left: 0
+      transform: translateX(2%)
+
+    .right &
+      left: 100%
+      transform: translateX(-105%)
+
+  &.active
+    @media (max-width: 1000px)
+      filter: blur(7px)
+
+.box
+  position: absolute
+  left: 0
+  right: 0
+  background-color: rgba(white, .9)
+  padding: 50px
+  margin: 0 -20px
+  z-index: 2
+
+  @media (max-width: 1000px)
+    top: 0 !important
+    bottom: 0 !important
+    display: flex
+    flex-flow: column
+    align-items: left
+    justify-content: center
+
+  @media (min-width: 1000px)
+    z-index: 0
+    margin: 0
+    width: 350px
+    background: transparent
+    transition: left .2s ease, right .2s ease, transform .2s ease, top .2s ease
+    padding-top: 32px
+
+    .left &
+      left: 100%
+      transform: translateX(-102%)
+
+    .right &
+      right: 100%
+      transform: translateX(-2%)
+
+
 </style>
