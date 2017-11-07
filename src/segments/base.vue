@@ -27,6 +27,7 @@ export default {
     transition: opacity .2s ease
     opacity: 0
     pointer-events: none
+    // fill: #6AD9B1
 
   & >>> .stroke
     transition: fill .3s ease
