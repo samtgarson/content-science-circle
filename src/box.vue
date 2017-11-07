@@ -1,6 +1,7 @@
 <template lang="pug">
   .box
-    img(src="./assets/text-box.svg")
+    img(src="./assets/text-box.svg").left
+    img(src="./assets/text-box.svg").right
     h2
       span {{ number }}.
       | {{ title }}
@@ -54,17 +55,34 @@ img
   left: 0px
   top: 8px
   width: 700px
+  transition: 0.4s 0.1s opacity ease
+
+  &.right
+    transform: scaleX(-1)
 
   .left &
     left: auto
     right: 25px
-    transform: scaleX(-1)
+
+    &.left
+      opacity: 0
+      transition-delay: 0s
+      transition-duration: 0s
+    // transform: scaleX(-1)
+
+  .right &.right
+    opacity: 0
+    transition-delay: 0s
+    transition-duration: 0s
 
   .downwards &
     bottom: 8px
     top: auto
     transform: scaleY(-1)
 
-  .downwards.left &
-    transform: scale(-1)
+    &.right
+      transform: scale(-1)
+
+  // .downwards.left &
+    // transform: scale(-1)
 </style>

@@ -147,17 +147,15 @@ svg
 
   @media (min-width: 1000px)
     position: absolute
-    transition: left .2s ease, transform .2s ease
+    transition: transform .2s ease
     left: 50%
     transform: translateX(-50%)
 
     .left &
-      left: 0
-      transform: translateX(2%)
+      transform: translateX(calc(-50% - 250px))
 
     .right &
-      left: 100%
-      transform: translateX(-105%)
+      transform: translateX(calc(-50% + 250px))
 
   &.active
     @media (max-width: 1000px)
@@ -165,8 +163,9 @@ svg
 
 .box
   position: absolute
-  left: 0
-  right: 0
+  left: 50%
+  transform: translateX(-50%)
+  width: 100%
   background-color: rgba(white, .9)
   padding: 50px
   margin: 0 -20px
@@ -185,16 +184,14 @@ svg
     margin: 0
     width: 350px
     background: transparent
-    transition: left .2s ease, right .2s ease, transform .2s ease, top .2s ease
+    transition: transform .2s ease, top .2s ease
     padding-top: 32px
 
     .left &
-      left: 100%
-      transform: translateX(-102%)
+      transform: translateX(calc(-50% + 250px))
 
     .right &
-      right: 100%
-      transform: translateX(-2%)
+      transform: translateX(calc(-50% - 250px))
 
 
 </style>
