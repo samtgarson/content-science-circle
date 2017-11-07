@@ -55,7 +55,8 @@ img
   left: 0px
   top: 8px
   width: 700px
-  transition: 0.4s 0.1s opacity ease
+  opacity: 0
+  transition: 0s 0s opacity ease
 
   &.right
     transform: scaleX(-1)
@@ -64,16 +65,16 @@ img
     left: auto
     right: 25px
 
-    &.left
-      opacity: 0
-      transition-delay: 0s
-      transition-duration: 0s
+    &.right
+      opacity: 1
+      transition-delay: 0.1s
+      transition-duration: 0.4s
     // transform: scaleX(-1)
 
-  .right &.right
-    opacity: 0
-    transition-delay: 0s
-    transition-duration: 0s
+  .right &.left
+    opacity: 1
+    transition-delay: 0.1s
+    transition-duration: 0.4s
 
   .downwards &
     bottom: 8px

@@ -28,15 +28,15 @@ main
   margin: 0 auto
 
 .fade-enter-active, .fade-leave-active
-  transition: opacity .2s
+  transition: opacity .2s !important
 
 .fade-enter, .fade-leave-active
-  opacity: 0
+  opacity: 0 !important
 
 .slide-enter-active, .slide-leave-active
   transition: opacity .2s, transform .3s ease-out
 
 .slide-enter, .slide-leave-active
-  opacity: 0
+  opacity: 0 !important
   transform: translateY(8px)
 </style>

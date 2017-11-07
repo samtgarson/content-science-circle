@@ -26,6 +26,7 @@
     div(
       v-for="segment in segments",
       :is="segment.name",
+      ref="segments",
       @mousedown.native="activate(segment, $event)",
       :active="segment.active")
     text
@@ -79,6 +80,13 @@ export default {
   components: { One, Two, Three, Four, Five, Six, Box },
   name: 'body',
   data: () => ({ active: false, side: '', style: {}, downwards: false }),
+  mounted () {
+    setTimeout(() => {
+      this.activate(this.segments[0], {
+        target: this.$refs.segments[0].$el
+      })
+    }, 1000)
+  },
   watch: {
     active (n) {
       if (!n) return this.side = ''
@@ -163,9 +171,6 @@ svg
 
 .box
   position: absolute
-  left: 50%
-  transform: translateX(-50%)
-  width: 100%
   background-color: rgba(white, .9)
   padding: 50px
   margin: 0 -20px
@@ -174,6 +179,8 @@ svg
   @media (max-width: 1000px)
     top: 0 !important
     bottom: 0 !important
+    left: 0
+    right: 0
     display: flex
     flex-flow: column
     align-items: left
@@ -182,9 +189,11 @@ svg
   @media (min-width: 1000px)
     z-index: 0
     margin: 0
+    left: 50%
+    transform: translateX(-50%)
     width: 350px
     background: transparent
-    transition: transform .2s ease, top .2s ease
+    transition: transform .2s ease, top .2s ease, opacity .1s ease-out
     padding-top: 32px
 
     .left &
