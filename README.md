@@ -1,6 +1,4 @@
-# explained-agency
-
-> Explained Agency Content Science Circle
+**content-science-circle** An interactive diagram for explained.agency
 
 ## Build Setup
 
