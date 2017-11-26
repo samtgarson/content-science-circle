@@ -60,8 +60,8 @@
     text
       tspan.numbers(x="300.45", y="97.71") 01.
     g.title(transform="translate(227.000000, 394.000000)")
-      text(font-size="31.2119988")
-        tspan(x="1.18646397", y="30") Content Science Circle
+      text(font-size="30")
+        tspan(x="3.18646397", y="30") Content Science Circle
       text(font-size="16.6463994")
         tspan(x="360.203113", y="17.0404") ®
 </template>
